@@ -27,23 +27,34 @@ class SinglyLinkedList:
         print("->".join(values) if values else "List is empty")
 
     def insert(self, pos, data):
-        if pos < 0:
+        if pos < 1:
             print("Invalid position")
             return
+
         node = Node(data)
-        if pos == 0:
+
+        # Insert at head
+        if pos == 1:
             node.next = self.head
+            if self.head is not None:
+                self.head.prev = node
             self.head = node
             return
+
         cur = self.head
-        for i in range(pos - 1):
+        for i in range(pos - 2):
             if cur is None:
                 break
             cur = cur.next
+
         if cur is None:
             print("Insert failed")
             return
+
         node.next = cur.next
+        node.prev = cur
+        if cur.next is not None:
+            cur.next.prev = node
         cur.next = node
 
     def find_middle(self):
@@ -94,3 +105,17 @@ class SinglyLinkedList:
                 cur = cur.next
         print("Pair sums:", sums)
         return sums
+
+dll=SinglyLinkedList()
+dll.append(Node(10))
+dll.append(Node(20))
+dll.append(Node(30))
+dll.append(Node(40))
+dll.traverse()
+
+
+dll.insert(5, 100)
+dll.traverse()
+
+dll.insert(3, 200)
+dll.traverse()
